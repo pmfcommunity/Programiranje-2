@@ -7,9 +7,10 @@
     kreirati genericku funkciju.
 */
 
-void pomnozi_niz(int* niz, int n) {
-    int pomocni[100];
-    int proizvod {1};
+template <typename T>
+void pomnozi_niz(T* niz, T n) {
+    T pomocni[100];
+    T proizvod {1};
     for (int i = 0; i < n; i++) {
         pomocni[i] = proizvod;
         proizvod *= niz[i];
