@@ -11,11 +11,13 @@
 
     a) Ispravnost prvo demonstrirajte malim primjerom koji radi sa vektorom
        stringova.
+
+    b) Potom napravite primjer sa vektorom pokazivaca na stringove.
 */
 
-bool kriterij(std::string a, std::string b) {
-    if (a.length() == b.length()) return a < b;
-    return a.length() < b.length();
+bool kriterij(std::string* a, std::string* b) {
+    if (a->length() == b->length()) return *a < *b;
+    return a->length() < b->length();
 }
 
 template <typename T>
@@ -27,9 +29,13 @@ std::list<T> sortiraj(std::vector<T> v, bool (*kriterij)(T, T)) {
 }
 
 int main() {
-    std::vector<std::string> v = {"3241", "abcd", "jabuka", "Banana"};
-    std::list<std::string> l = sortiraj(v, kriterij);
-    for (const auto& lista : l) std::cout << lista << " ";
+    std::vector<std::string*> v;
+    v.push_back(new std::string("1234"));
+    v.push_back(new std::string("Ananas"));
+    v.push_back(new std::string("abcd"));
+    v.push_back(new std::string("jabuka"));
+    std::list<std::string*> l = sortiraj(v, kriterij);
+    for (const auto& lista : l) std::cout << *lista << " ";
     std::cout << std::endl;
     return 0;
 }
