@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <string>
+#include <algorithm>
 
 /*
     Napraviti program koji od korisnika trazi unos rijeci sa tastature, koje se smjestaju
@@ -14,6 +15,8 @@
     a) Sada napravite da se prvo unosi broj stringova (i na kraju se ne unosi "KRAJ").
     Promijenite da se vise ne koristi tip vektor, odaberite tip podatka.
 
+    b) Nakon toga, napravite da funkcija vraca sortirane vektore u trecem i cetvrtom
+       parametru.
 */
 
 // Receno od asistenta da kriterij moze biti bilo sta.
@@ -28,6 +31,9 @@ void podijeli(std::string* pocetak, std::string* iza_kraja, bool (*kriterij)(std
             v1.push_back(*p);
         } else v2.push_back(*p);
     }
+
+    std::sort(v1.begin(), v1.end());
+    std::sort(v2.begin(), v2.end());
 }
 
 int main() {
