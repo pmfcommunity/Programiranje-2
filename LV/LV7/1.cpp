@@ -10,6 +10,10 @@
     stringova. U trecem parametru trebaju biti vraceni svi oni stringovi za koje je 
     proslijedjena funkcija vratila true, a u cetvrtom parametru trebaju biti vraceni
     stringovi za koji ne zadovoljavaju uslov.
+
+    a) Sada napravite da se prvo unosi broj stringova (i na kraju se ne unosi "KRAJ").
+    Promijenite da se vise ne koristi tip vektor, odaberite tip podatka.
+
 */
 
 // Receno od asistenta da kriterij moze biti bilo sta.
@@ -18,31 +22,36 @@ bool kriterij(std::string s) {
     return false;
 }
 
-void podijeli(const std::vector<std::string>& rijeci, bool (*kriterij)(std::string), std::vector<std::string>& v1, std::vector<std::string>& v2) {
-    for (int i = 0; i < rijeci.size(); i++) {
-        if (kriterij(rijeci.at(i))) {
-            v1.push_back(rijeci.at(i));
-        } else v2.push_back(rijeci.at(i));
+void podijeli(std::string* pocetak, std::string* iza_kraja, bool (*kriterij)(std::string), std::vector<std::string>& v1, std::vector<std::string>& v2) {
+    for (auto *p = pocetak; p < iza_kraja; *p++) {
+        if (kriterij(*p)) {
+            v1.push_back(*p);
+        } else v2.push_back(*p);
     }
 }
 
 int main() {
+    int n;
+    std::cout << "Unesite broj rijeci: ";
+    std::cin >> n;
     std::string rijec;
-    std::vector<std::string> rijeci;
+    std::string* rijeci = new std::string[n];
 
-    while (true) {
-        std::cout << "Unesite rijec: ";
-        std::getline(std::cin, rijec);
-        if (rijec == "KRAJ") break;
-        rijeci.push_back(rijec);
+    int index {0};
+    std::cin.ignore();
+    while (index < n) {
+        std::cout << "Unesite " << index + 1 << ". rijec: ";
+        std::getline(std::cin, rijeci[index]);
+        index++;
     }
     std::vector<std::string> v1, v2;
-    podijeli(rijeci, kriterij, v1, v2);
+    podijeli(rijeci, rijeci + n, kriterij, v1, v2);
     std::cout << "Ispis prvog vektora:\n";
     for (std::string v : v1) std::cout << v << " ";
     std::cout << std::endl;
     std::cout << "Ispis drugog vektora\n";
     for (std::string v : v2) std::cout << v << " ";
     std::cout << std::endl;
+    delete[] rijeci;
     return 0;
 }
