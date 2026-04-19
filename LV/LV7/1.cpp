@@ -42,6 +42,8 @@
     h) Izmijenite sortiranje treceg i cetvrtog parametra, na nacin da tokom punjena 
        treceg i cetvrtog parametra, oni budu cijelo vrijeme sortirani (iteratovino 
        ubacujte rijeci na odgovarajuce pozicije)
+    
+    i) Sada promjenite program da koristi lambda funkcije. 
 */
 
 // Receno od asistenta da kriterij moze biti bilo sta.
@@ -67,7 +69,7 @@ void sortiranje(std::vector<std::string*>& v1, std::vector<std::string*>& v2) {
     std::sort(v2.begin(), v2.end(), case_insensitive_kriterij);
 }
 
-void podijeli(std::string* pocetak, std::string* iza_kraja, bool (*kriterij)(std::string), std::vector<std::string*>& v1, std::vector<std::string*>& v2, std::vector<std::string>& zabrana, void (*sortiranje)(std::vector<std::string*>&, std::vector<std::string*>&)) {
+auto podijeli = [](std::string* pocetak, std::string* iza_kraja, bool (*kriterij)(std::string), std::vector<std::string*>& v1, std::vector<std::string*>& v2, std::vector<std::string>& zabrana, void (*sortiranje)(std::vector<std::string*>&, std::vector<std::string*>&)) {
     for (auto p = pocetak; p < iza_kraja; p++) {
         std::string* kopija = new std::string(*p);
         auto it = std::find(zabrana.begin(), zabrana.end(), *kopija);
@@ -77,7 +79,7 @@ void podijeli(std::string* pocetak, std::string* iza_kraja, bool (*kriterij)(std
         } else v2.push_back(kopija);
         sortiranje(v1, v2);
     }
-}
+};
 
 int main() {
     int n;
