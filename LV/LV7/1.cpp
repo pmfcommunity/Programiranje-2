@@ -26,6 +26,10 @@
     d) Promijenite da se ne koriste stringovi, nego pokazivaci na stringove. Treci i 
        cetvrti parametar sada treba da sadrze pokazivace na stringove - iste one koji
        su dati u prvom parametru.
+
+    e) Doputine da se za treci i cetvrti parametar sada kopiraju stringovi, tako da oni
+       vise ne pokazuju na izvorne stringove, nego na njihove kopije. Ne zaboravite na 
+       kraju dealocirati stringove!
 */
 
 // Receno od asistenta da kriterij moze biti bilo sta.
@@ -36,11 +40,12 @@ bool kriterij(std::string s) {
 
 void podijeli(std::string* pocetak, std::string* iza_kraja, bool (*kriterij)(std::string), std::vector<std::string*>& v1, std::vector<std::string*>& v2, std::vector<std::string>& zabrana) {
     for (auto *p = pocetak; p < iza_kraja; *p++) {
-        auto it = std::find(zabrana.begin(), zabrana.end(), *p);
+        std::string* kopija = new std::string(*p);
+        auto it = std::find(zabrana.begin(), zabrana.end(), *kopija);
         if (it != zabrana.end()) continue;
-        if (kriterij(*p)) {
-            v1.push_back(p);
-        } else v2.push_back(p);
+        if (kriterij(*kopija)) {
+            v1.push_back(kopija);
+        } else v2.push_back(kopija);
     }
 
     std::sort(v1.begin(), v1.end());
@@ -70,6 +75,9 @@ int main() {
     std::cout << "Ispis drugog vektora\n";
     for (std::string* v : v2) std::cout << *v << " ";
     std::cout << std::endl;
+
+    for (std::string* v : v1) delete v;
+    for (std::string* v : v2) delete v;
     delete[] rijeci;
     return 0;
 }
