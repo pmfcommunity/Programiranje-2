@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <algorithm>
+#include <cctype>
 
 /*
     Napraviti program koji od korisnika trazi unos rijeci sa tastature, koje se smjestaju
@@ -34,6 +35,9 @@
     f) Dodajte parametar koji predstavlja pokazivac na funkciju koja ce se koristiti
        za sortiranje stringova koji se vracaju u trecem i cetvrtom parametru. Napravite
        da sortiranje bude opadajuce.
+
+    g) Napravite sada da sortiranje bude case-insensitive, tj. da nema razlike izmedju
+       velikih i malih slova.
 */
 
 // Receno od asistenta da kriterij moze biti bilo sta.
@@ -42,9 +46,21 @@ bool kriterij(std::string s) {
     return false;
 }
 
+bool case_insensitive_kriterij(std::string* s1, std::string* s2) {
+    if (s1 == nullptr || s2 == nullptr) return s1 < s2;
+    return std::lexicographical_compare(
+        s1->begin(), s1->end(),
+        s2->begin(), s2->end(),
+        [](char c1, char c2) {
+            return std::tolower(static_cast<unsigned char>(c1)) < 
+                   std::tolower(static_cast<unsigned char>(c2));
+        }
+    );
+}
+
 void sortiranje(std::vector<std::string*>& v1, std::vector<std::string*>& v2) {
-    std::sort(v1.begin(), v1.end());
-    std::sort(v2.begin(), v2.end());
+    std::sort(v1.begin(), v1.end(), case_insensitive_kriterij);
+    std::sort(v2.begin(), v2.end(), case_insensitive_kriterij);
 }
 
 void podijeli(std::string* pocetak, std::string* iza_kraja, bool (*kriterij)(std::string), std::vector<std::string*>& v1, std::vector<std::string*>& v2, std::vector<std::string>& zabrana, void (*sortiranje)(std::vector<std::string*>&, std::vector<std::string*>&)) {
