@@ -30,6 +30,10 @@
     e) Doputine da se za treci i cetvrti parametar sada kopiraju stringovi, tako da oni
        vise ne pokazuju na izvorne stringove, nego na njihove kopije. Ne zaboravite na 
        kraju dealocirati stringove!
+
+    f) Dodajte parametar koji predstavlja pokazivac na funkciju koja ce se koristiti
+       za sortiranje stringova koji se vracaju u trecem i cetvrtom parametru. Napravite
+       da sortiranje bude opadajuce.
 */
 
 // Receno od asistenta da kriterij moze biti bilo sta.
@@ -38,8 +42,13 @@ bool kriterij(std::string s) {
     return false;
 }
 
-void podijeli(std::string* pocetak, std::string* iza_kraja, bool (*kriterij)(std::string), std::vector<std::string*>& v1, std::vector<std::string*>& v2, std::vector<std::string>& zabrana) {
-    for (auto *p = pocetak; p < iza_kraja; *p++) {
+void sortiranje(std::vector<std::string*>& v1, std::vector<std::string*>& v2) {
+    std::sort(v1.begin(), v1.end());
+    std::sort(v2.begin(), v2.end());
+}
+
+void podijeli(std::string* pocetak, std::string* iza_kraja, bool (*kriterij)(std::string), std::vector<std::string*>& v1, std::vector<std::string*>& v2, std::vector<std::string>& zabrana, void (*sortiranje)(std::vector<std::string*>&, std::vector<std::string*>&)) {
+    for (auto p = pocetak; p < iza_kraja; p++) {
         std::string* kopija = new std::string(*p);
         auto it = std::find(zabrana.begin(), zabrana.end(), *kopija);
         if (it != zabrana.end()) continue;
@@ -47,9 +56,7 @@ void podijeli(std::string* pocetak, std::string* iza_kraja, bool (*kriterij)(std
             v1.push_back(kopija);
         } else v2.push_back(kopija);
     }
-
-    std::sort(v1.begin(), v1.end());
-    std::sort(v2.begin(), v2.end());
+    sortiranje(v1, v2);
 }
 
 int main() {
@@ -68,7 +75,7 @@ int main() {
     }
     std::vector<std::string*> v1, v2;
     std::vector<std::string> zabrana = {"1234", "abcd"};
-    podijeli(rijeci, rijeci + n, kriterij, v1, v2, zabrana);
+    podijeli(rijeci, rijeci + n, kriterij, v1, v2, zabrana, sortiranje);
     std::cout << "Ispis prvog vektora:\n";
     for (std::string* v : v1) std::cout << *v << " ";
     std::cout << std::endl;
