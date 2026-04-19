@@ -13,18 +13,14 @@
        stringova.
 
     b) Potom napravite primjer sa vektorom pokazivaca na stringove.
-*/
 
-bool kriterij(std::string* a, std::string* b) {
-    if (a->length() == b->length()) return *a < *b;
-    return a->length() < b->length();
-}
+    c) Zatim koristite labda funkciju za drugi parametar.
+*/
 
 template <typename T>
 std::list<T> sortiraj(std::vector<T> v, bool (*kriterij)(T, T)) {
     std::list<T> nova_lista(v.begin(), v.end());
     nova_lista.sort(kriterij);
-
     return nova_lista;
 }
 
@@ -34,8 +30,13 @@ int main() {
     v.push_back(new std::string("Ananas"));
     v.push_back(new std::string("abcd"));
     v.push_back(new std::string("jabuka"));
-    std::list<std::string*> l = sortiraj(v, kriterij);
+    std::list<std::string*> l = sortiraj<std::string*>(v, [](std::string* a, std::string* b) {
+        if (a->length() == b->length()) return *a < *b;
+        return a->length() < b->length();
+    });
     for (const auto& lista : l) std::cout << *lista << " ";
     std::cout << std::endl;
+
+    for (auto a : v) delete a;
     return 0;
 }
