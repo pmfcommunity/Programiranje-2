@@ -17,6 +17,11 @@
 
     b) Nakon toga, napravite da funkcija vraca sortirane vektore u trecem i cetvrtom
        parametru.
+
+    c) Dodajte peti parametar funkcije, koji predstavlja niz stringova - ukoliko se neka
+       od rijeci proslijedjenih u prvom parametru nalazi u nizu, onda se ona ignorise
+       (ne vraca se u trecem ili cetvrtom parametru). Za pretragu koristite funkcije iz
+       algorithm biblioteke.
 */
 
 // Receno od asistenta da kriterij moze biti bilo sta.
@@ -25,8 +30,10 @@ bool kriterij(std::string s) {
     return false;
 }
 
-void podijeli(std::string* pocetak, std::string* iza_kraja, bool (*kriterij)(std::string), std::vector<std::string>& v1, std::vector<std::string>& v2) {
+void podijeli(std::string* pocetak, std::string* iza_kraja, bool (*kriterij)(std::string), std::vector<std::string>& v1, std::vector<std::string>& v2, std::vector<std::string>& zabrana) {
     for (auto *p = pocetak; p < iza_kraja; *p++) {
+        auto it = std::find(zabrana.begin(), zabrana.end(), *p);
+        if (it != zabrana.end()) continue;
         if (kriterij(*p)) {
             v1.push_back(*p);
         } else v2.push_back(*p);
@@ -51,7 +58,8 @@ int main() {
         index++;
     }
     std::vector<std::string> v1, v2;
-    podijeli(rijeci, rijeci + n, kriterij, v1, v2);
+    std::vector<std::string> zabrana = {"1234", "abcd"};
+    podijeli(rijeci, rijeci + n, kriterij, v1, v2, zabrana);
     std::cout << "Ispis prvog vektora:\n";
     for (std::string v : v1) std::cout << v << " ";
     std::cout << std::endl;
