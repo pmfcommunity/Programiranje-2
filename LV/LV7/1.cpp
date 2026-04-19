@@ -38,6 +38,10 @@
 
     g) Napravite sada da sortiranje bude case-insensitive, tj. da nema razlike izmedju
        velikih i malih slova.
+
+    h) Izmijenite sortiranje treceg i cetvrtog parametra, na nacin da tokom punjena 
+       treceg i cetvrtog parametra, oni budu cijelo vrijeme sortirani (iteratovino 
+       ubacujte rijeci na odgovarajuce pozicije)
 */
 
 // Receno od asistenta da kriterij moze biti bilo sta.
@@ -71,8 +75,8 @@ void podijeli(std::string* pocetak, std::string* iza_kraja, bool (*kriterij)(std
         if (kriterij(*kopija)) {
             v1.push_back(kopija);
         } else v2.push_back(kopija);
+        sortiranje(v1, v2);
     }
-    sortiranje(v1, v2);
 }
 
 int main() {
