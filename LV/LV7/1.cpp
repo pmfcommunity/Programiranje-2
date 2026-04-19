@@ -44,6 +44,9 @@
        ubacujte rijeci na odgovarajuce pozicije)
     
     i) Sada promjenite program da koristi lambda funkcije. 
+
+    j) Obratite paznju na const deklaracije. Pokusajte sto detaljnije opisati putem
+       const svaki od parametara.
 */
 
 // Receno od asistenta da kriterij moze biti bilo sta.
@@ -69,7 +72,7 @@ void sortiranje(std::vector<std::string*>& v1, std::vector<std::string*>& v2) {
     std::sort(v2.begin(), v2.end(), case_insensitive_kriterij);
 }
 
-auto podijeli = [](std::string* pocetak, std::string* iza_kraja, bool (*kriterij)(std::string), std::vector<std::string*>& v1, std::vector<std::string*>& v2, std::vector<std::string>& zabrana, void (*sortiranje)(std::vector<std::string*>&, std::vector<std::string*>&)) {
+auto podijeli = [](const std::string* pocetak, const std::string* iza_kraja, bool (*kriterij)(std::string), std::vector<std::string*>& v1, std::vector<std::string*>& v2, const std::vector<std::string>& zabrana, void (*sortiranje)(std::vector<std::string*>&, std::vector<std::string*>&)) {
     for (auto p = pocetak; p < iza_kraja; p++) {
         std::string* kopija = new std::string(*p);
         auto it = std::find(zabrana.begin(), zabrana.end(), *kopija);
