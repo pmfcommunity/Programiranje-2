@@ -55,6 +55,7 @@ int main() {
             std::cin >> niz[i];
         }
         std::cout << f(niz, p, k) << std::endl;
+        delete[] niz;
     }
     if (s == 'V') {
         std::vector<float> vektor;
