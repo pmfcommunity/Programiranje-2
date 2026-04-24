@@ -14,7 +14,7 @@ void Rotiraj(int** matrica, int n) {
     }
 
     for (int i = 0; i < n; i++) {
-        std::reverse(matrica[i], matrica[n - 1 - 1]);
+        std::reverse(matrica[i], matrica[n - 1 - i]);
     }
 
     std::cout << "Ispis matrice:\n";
