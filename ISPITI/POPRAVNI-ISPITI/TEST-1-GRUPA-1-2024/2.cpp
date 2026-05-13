@@ -20,6 +20,7 @@
 
 template <typename T>
 std::vector<T> g(const std::vector<T>& brojevi) {
+    if (brojevi.empty()) return {};
     std::vector<std::vector<T>> monotoni_nizovi;
 
     std::vector<T> pomocni;
