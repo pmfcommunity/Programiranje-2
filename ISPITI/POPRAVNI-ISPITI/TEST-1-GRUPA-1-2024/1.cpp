@@ -54,6 +54,7 @@ int main() {
             }
             std::cout << std::endl << m << std::endl;
         }
+        delete niz;
     }
     catch (const std::logic_error& e) {
         std::cout << e.what() << std::endl;
