@@ -53,6 +53,8 @@ int main() {
             std::cin >> niz[i];
         }
         std::cout << f(&niz[0], p, k) << std::endl;
+        delete[] niz;
+        niz = nullptr;
     }
     if (s == 'V' || s == 'v') {
         std::vector<double> vektor;
